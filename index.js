@@ -11,7 +11,7 @@ const util = {
   },
 
   getItem(arr, index, ignoreItem) {
-    var arrCopy = arr.slice(),
+    var arrCopy   = arr.slice(),
         selection = arrCopy[index]
 
     if (selection === ignoreItem) {
@@ -27,7 +27,7 @@ const util = {
 const phrase = {
 
   choose(ignorePhrase) {
-    util.getItem(phrases, util.getRandomIndex(phrases))
+    util.getItem(phrases, util.getRandomIndex(phrases), ignorePhrase)
   },
 
   build(first, second) {
