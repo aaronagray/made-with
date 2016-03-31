@@ -23,7 +23,7 @@ _Made-With_ is a for-fun command-line tool. Globally install _Made-With_ and gen
 ```
 madeWith = require('made-with')
 
-console.log(madeWith.generatePhrase());
+console.log(madeWith.phrasegenerate()));
 // => "Made with HTML5 and ice cream.""
 ```
 

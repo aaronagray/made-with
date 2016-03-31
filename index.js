@@ -1,57 +1,57 @@
 #!/usr/bin/env node
 
-var chalk = require('chalk')
+var chalk       = require('chalk'),
+    chalkStyles = require('./chalkStyles.json'),
+    phrases     = require('./phrases.json')
 
-var chalkStyles = require('./chalkStyles.json')
-var phrases = require('./phrases.json');
+const util = {
 
-var util = {
-  getRandomIndex: function (arr) {
-    return Math.floor(Math.random() * arr.length);
+  getRandomIndex(arr) {
+    return Math.floor(Math.random() * arr.length)
   },
 
-  getItem: function (arr, index, ignoreItem) {
+  getItem(arr, index, ignoreItem) {
     var arrCopy = arr.slice(),
-        selection = arrCopy[index];
+        selection = arrCopy[index]
 
     if (selection === ignoreItem) {
-      arrCopy.splice(arrCopy.indexOf(ignoreItem), 1);
-      return arrCopy[index];
+      arrCopy.splice(arrCopy.indexOf(ignoreItem), 1)
+      return arrCopy[index]
     }
-    return selection;
+
+    return selection
   }
+
 }
 
-var phrase = {
-  choose: function (ignorePhrase) {
-    var index = util.getRandomIndex(phrases);
-    return util.getItem(phrases, index);
+const phrase = {
+
+  choose(ignorePhrase) {
+    util.getItem(phrases, util.getRandomIndex(phrases))
   },
 
-  build: function (first, second) {
-    var firstIndex = util.getRandomIndex(chalkStyles),
+  build(first, second) {
+    var firstIndex  = util.getRandomIndex(chalkStyles),
         secondIndex = util.getRandomIndex(chalkStyles),
-        firstStyle = util.getItem(chalkStyles, firstIndex),
-        secondStyle = util.getItem(chalkStyles, secondIndex, firstStyle);
+        firstStyle  = util.getItem(chalkStyles, firstIndex),
+        secondStyle = util.getItem(chalkStyles, secondIndex, firstStyle)
 
-    return 'Made with ' + chalk[firstStyle](first) + ' and ' + chalk[secondStyle](second) + '.';
+    return `Made with ${chalk[firstStyle](first)} and ${chalk[secondStyle](second)}`
   },
 
-  format: function (phrase) {
-    return '\n\t' + phrase + '\n';
+  format(phrase) {
+    return `\n\t'${phrase}'\n'`
+  },
+
+  generate() {
+    var phraseOne = phrase.choose(),
+     phraseTwo    = phrase.choose(phraseOne),
+     finalPhrase  = phrase.build(phraseOne, phraseTwo)
+
+    return phrase.format(finalPhrase)
   }
+
 }
 
-function generatePhrase() {
-  var phraseOne = phrase.choose(),
-   phraseTwo = phrase.choose(phraseOne),
-   finalPhrase = phrase.build(phraseOne, phraseTwo);
-
-  return phrase.format(finalPhrase);
-}
-
-console.log(generatePhrase())
-
-exports.util = util;
-exports.phrase = phrase;
-exports.generatePhrase = generatePhrase;
+exports.util   = util
+exports.phrase = phrase
